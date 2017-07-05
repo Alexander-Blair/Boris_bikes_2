@@ -9,13 +9,22 @@ class DockingStation
   end
 
   def release_bike(bike)
-    raise "No Bikes Available" if @bikes.empty?
+    raise "No Bikes Available" if empty?
     @bikes.delete(bike)
   end
 
   def dock_bike(bike)
-    raise "No Slots Available" unless @bikes.length < 20
+    raise "No Slots Available" if full?
     @bikes << bike
+  end
+
+  private
+  def full?
+    @bikes.length >= 20 ? true : false
+  end
+
+  def empty?
+    @bikes.empty? ? true : false
   end
 
 end
