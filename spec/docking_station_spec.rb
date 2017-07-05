@@ -29,4 +29,8 @@ describe DockingStation do
     expect(bike.docked).to eq(false)
   end
 
+  it 'does not release bike from empty dock' do
+    expect { subject.release_bike }.to raise_error(RuntimeError)
+  end
+
 end
