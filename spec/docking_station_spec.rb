@@ -30,7 +30,7 @@ describe DockingStation do
 
   before(:context) do
     @dockbike = DockingStation.new
-    20.times { @dockbike.dock_bike(Bike.new) }
+    DockingStation::DEFAULT_CAPACITY.times { @dockbike.dock_bike(Bike.new) }
   end
 
   it 'does not allow bike to be docked if full' do
@@ -39,7 +39,7 @@ describe DockingStation do
 
   it 'removes bike when bike is released' do
     @dockbike.release_bike(@dockbike.bikes.first)
-    expect(@dockbike.bikes.length).to eq(19)
+    expect(@dockbike.bikes.length).to eq(DockingStation::DEFAULT_CAPACITY - 1)
   end
 
 end
