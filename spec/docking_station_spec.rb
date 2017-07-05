@@ -8,4 +8,6 @@ describe DockingStation do
     expect(Bike.new.working?).to eq(true)
   end
 
+  it { is_expected.to respond_to(:dock_bike)}
+
 end
