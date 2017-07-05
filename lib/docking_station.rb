@@ -6,20 +6,15 @@ class DockingStation
 
   def initialize
     @bikes = []
-    @has_bikes = false
   end
 
   def release_bike
-    raise "No Bikes Available" if @has_bikes == false
-    @bikes << new = Bike.new
-    new
+    raise "No Bikes Available" if @bikes.empty?
   end
 
-  # def dock_status
-  #   raise "No Bikes Available" if @has_bikes == false
-  # end
 
   def dock_bike(bike)
+    @bikes << bike
   end
 
 end
