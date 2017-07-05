@@ -12,8 +12,8 @@ class DockingStation
     raise "No Bikes Available" if @bikes.empty?
   end
 
-
   def dock_bike(bike)
+    raise "No Slots Available" unless @bikes.empty?
     @bikes << bike
   end
 

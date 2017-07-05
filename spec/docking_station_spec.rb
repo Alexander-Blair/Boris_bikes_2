@@ -23,13 +23,21 @@ describe DockingStation do
     expect(subject.bikes).to eq(bike)
   end
 
-  it 'when bike is created, it is not docked' do
-    expect(Bike.new.docked).to eq(false)
-  end
 
   it 'does not release bike from empty dock' do
     expect { subject.release_bike }.to raise_error(RuntimeError)
   end
 
+end
+
+describe DockingStation do
+  before(:context) do
+    @dockbike = DockingStation.new
+    @dockbike.dock_bike(Bike.new)
+  end
+
+  it 'does not allow bike to be docked if full' do
+    expect { @dockbike.dock_bike(Bike.new) }.to raise_error(RuntimeError)
+  end
 
 end
