@@ -9,5 +9,6 @@ describe DockingStation do
   end
 
   it { is_expected.to respond_to(:dock_bike)}
+  it { is_expected.to respond_to(:bikes)}
 
 end
