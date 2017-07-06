@@ -6,19 +6,22 @@ class DockingStation
 
   attr_reader :bikes, :capacity
 
-  def initialize(capacity=20)
+  def initialize(capacity=DEFAULT_CAPACITY)
     @capacity = capacity
     @bikes = []
   end
 
   def release_bike(bike)
     raise "No Bikes Available" if empty?
+    raise "Bike is broken" unless bike.working?
     @bikes.delete(bike)
+    bike
   end
 
   def dock_bike(bike)
     raise "No Slots Available" if full?
     @bikes << bike
+    bike
   end
 
 

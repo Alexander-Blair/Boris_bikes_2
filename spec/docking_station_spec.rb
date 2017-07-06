@@ -39,15 +39,21 @@ describe DockingStation do
   end
 
   let(:dock) { DockingStation.new }
+  let(:broken_bike) { @dockbike.bikes.first }
 
   describe '#release_bike' do
 
     it 'does not release bike from empty dock' do
-      expect { dock.release_bike(Bike.new) }.to raise_error(RuntimeError)
+      expect { dock.release_bike(Bike.new) }.to raise_error(RuntimeError, "No Bikes Available")
+    end
+
+    it 'does not release broken bike from dock' do
+      broken_bike.broken
+      expect { @dockbike.release_bike(broken_bike) }.to raise_error(RuntimeError, "Bike is broken")
     end
 
     it 'removes bike when bike is released' do
-      @dockbike.release_bike(@dockbike.bikes.first)
+      @dockbike.release_bike(@dockbike.bikes.last)
       expect(@dockbike.bikes.length).to eq(DockingStation::DEFAULT_CAPACITY - 1)
     end
 
@@ -56,13 +62,19 @@ describe DockingStation do
   describe '#dock_bike' do
 
     it 'does not allow bike to be docked if full' do
-      expect { @dockbike.dock_bike(Bike.new) }.to raise_error(RuntimeError)
+      expect { @dockbike.dock_bike(Bike.new) }.to raise_error(RuntimeError, "No Slots Available")
     end
 
-    let(:bike) { dock.dock_bike(Bike.new) }
+    it 'allows broken bikes to be returned to dock' do
+      broken_bike.broken
+      expect { subject.dock_bike(broken_bike).to eq broken_bike }
+    end
+
+    let(:bike) { Bike.new }
 
     it 'stores instances of bike in attribute of docking station' do
-      expect(dock.bikes).to eq(bike)
+      dock.dock_bike(bike)
+      expect(dock.bikes).to eq [bike]
     end
 
   end
